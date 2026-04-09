@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Browse — SafeBite</title>
+  <title>Browse - SafeBite</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -16,7 +16,7 @@
     }
     .map-legend span { display: flex; align-items: center; gap: 5px; }
     .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .legend-dot.blue  { background: #3B82F6; }
+    .legend-dot.blue { background: #3B82F6; }
     .legend-dot.green { background: #22C55E; border: 2px dashed #15803D; }
     .leaflet-tooltip.user-tip {
       background: #1E40AF; color: #fff; border: none;
@@ -44,7 +44,6 @@
   </nav>
 
   <main class="page">
-
     <h1 class="section-heading" style="font-size:1.35rem;letter-spacing:-0.5px;margin-bottom:16px;">
       <span class="tag">Browse</span> Available Food
     </h1>
@@ -55,26 +54,25 @@
     </div>
 
     <div class="filter-chips" id="filter-chips">
-      <button class="chip active" data-filter="all">All</button>
-      <button class="chip" data-filter="Bakery">Bakery</button>
-      <button class="chip" data-filter="Dairy">Dairy</button>
-      <button class="chip" data-filter="Produce">Produce</button>
-      <button class="chip" data-filter="Pantry">Pantry</button>
-      <button class="chip" data-filter="commute">Commute Match</button>
+      <button type="button" class="chip active" data-filter="all">All</button>
+      <button type="button" class="chip" data-filter="Bakery">Bakery</button>
+      <button type="button" class="chip" data-filter="Dairy">Dairy</button>
+      <button type="button" class="chip" data-filter="Produce">Produce</button>
+      <button type="button" class="chip" data-filter="Pantry">Pantry</button>
+      <button type="button" class="chip" data-filter="commute" id="commute-chip">Commute Match</button>
     </div>
 
     <div class="commute-banner">
-      <div class="cb-icon">🛤️</div>
+      <div class="cb-icon">CR</div>
       <div class="cb-text">
         <strong>2 items match your commute route</strong>
         <span>Pick them up on the way with no extra driving</span>
       </div>
-      <button class="btn btn-sm btn-green" onclick="filterCommute()">View</button>
+      <button type="button" class="btn btn-sm btn-green" id="commute-view-btn">View</button>
     </div>
 
     <div class="food-grid" id="food-grid"></div>
     <p id="empty-msg" style="display:none;text-align:center;color:var(--text-muted);padding:40px 16px;font-size:0.9rem;">No items found. Try a different filter.</p>
-
   </main>
 
   <div class="modal-overlay" id="modal-overlay">
@@ -122,11 +120,11 @@
       </div>
 
       <div class="safety-box">
-        <strong>Food Safety Notice · Demo Safety Layer</strong>
+        <strong>Food Safety Notice - Demo Safety Layer</strong>
         This prototype simulates AI label verification and privacy masking. Please inspect the item at pickup and use a neutral meeting point for handoff.
       </div>
-      <label class="check-row">
-        <input type="checkbox" id="safety-check" onchange="toggleClaim()" />
+      <label class="check-row" for="safety-check">
+        <input type="checkbox" id="safety-check" />
         I understand this is an approximate pickup zone and agree to inspect the item before collecting it.
       </label>
       <div class="neutral-spot-box" id="neutral-spot-box" style="display:none;background:var(--green-light);border:1.5px solid rgba(34,197,94,0.4);border-radius:10px;padding:12px 14px;margin-bottom:16px;">
@@ -134,7 +132,7 @@
         <div id="neutral-spot-text" style="font-size:0.88rem;color:var(--text);font-weight:500;"></div>
         <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Only the zone is shown in this demo. Final details should be agreed in chat.</div>
       </div>
-      <button class="btn btn-green btn-block" id="claim-btn" disabled>Claim This Item</button>
+      <button type="button" class="btn btn-green btn-block" id="claim-btn" disabled>Claim This Item</button>
     </div>
   </div>
 
@@ -280,7 +278,9 @@
 
     function filterCommute() {
       activeFilter = 'commute';
-      document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.filter === 'commute'));
+      document.querySelectorAll('.chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.filter === 'commute');
+      });
       applyFilters();
     }
 
@@ -288,12 +288,15 @@
       const chip = e.target.closest('.chip');
       if (!chip) return;
       activeFilter = chip.dataset.filter;
-      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.chip').forEach(node => node.classList.remove('active'));
       chip.classList.add('active');
       applyFilters();
     });
 
     document.getElementById('search-input').addEventListener('input', applyFilters);
+    document.getElementById('commute-view-btn').addEventListener('click', filterCommute);
+    document.getElementById('safety-check').addEventListener('change', toggleClaim);
+    document.getElementById('claim-btn').addEventListener('click', claimItem);
 
     function ensureMap() {
       if (mapInstance) return mapInstance;
@@ -370,7 +373,7 @@
 
     function openModal(id) {
       activeItemId = id;
-      const item = LISTINGS.find(i => i.id === id);
+      const item = LISTINGS.find(entry => entry.id === id);
       if (!item) {
         showToast('Item not found.');
         return;
@@ -422,7 +425,6 @@
       showToast('Item claimed. Head to the suggested pickup spot.');
     }
 
-    document.getElementById('claim-btn').addEventListener('click', claimItem);
     renderGrid(LISTINGS);
   </script>
 </body>
