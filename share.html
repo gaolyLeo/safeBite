@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Share Food — SafeBite</title>
+  <title>Share Food - SafeBite</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- Top Nav (desktop) -->
   <nav class="top-nav">
     <div class="logo"><span class="logo-dot"></span>Safe<em>Bite</em></div>
     <div class="top-nav-links">
@@ -21,15 +20,12 @@
 
   <main class="page">
 
-    <!-- Form -->
     <div class="share-form-wrap" id="share-form-wrap">
-
       <h1 class="section-heading" style="font-size:1.35rem;letter-spacing:-0.5px;margin-bottom:4px;">
         <span class="tag">Share</span> List an Item
       </h1>
       <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:20px;">Only list sealed, packaged items in good condition.</p>
 
-      <!-- Photo Upload -->
       <div class="form-section">
         <div class="form-section-title">Photo &amp; AI Verification</div>
 
@@ -39,18 +35,43 @@
         </div>
 
         <div class="upload-area" id="upload-label" onclick="document.getElementById('photo-input').click()" role="button" tabindex="0">
-          <span class="upload-icon">📷</span>
-          <p><strong>Tap to upload a photo</strong><br>AI will scan the expiry label automatically</p>
+          <span class="upload-icon">AI</span>
+          <p><strong>Tap to upload a photo</strong><br>AI will simulate label reading and confidence scoring</p>
         </div>
         <input type="file" id="photo-input" accept="image/*" style="display:none" />
 
         <div class="ai-scan-box" id="ai-scan-box">
-          <div class="spinner" id="scan-spinner"></div>
-          <span id="scan-text">Scanning label…</span>
+          <div class="spinner" id="scan-spinner" style="display:none;"></div>
+          <span id="scan-text">Upload a label photo to start scanning.</span>
+        </div>
+
+        <div class="scan-result-card" id="scan-result-card">
+          <div class="scan-result-head">
+            <div class="scan-result-title">AI Scan Result</div>
+            <span class="scan-status-badge" id="scan-status-badge">Pending</span>
+          </div>
+          <div class="scan-result-grid">
+            <div class="scan-result-item">
+              <div class="scan-result-label">Status</div>
+              <div class="scan-result-value" id="scan-result-status">Waiting for upload</div>
+            </div>
+            <div class="scan-result-item">
+              <div class="scan-result-label">Confidence</div>
+              <div class="scan-result-value" id="scan-result-confidence">--</div>
+            </div>
+            <div class="scan-result-item">
+              <div class="scan-result-label">Detected Date</div>
+              <div class="scan-result-value" id="scan-result-date">--</div>
+            </div>
+            <div class="scan-result-item">
+              <div class="scan-result-label">Label Type</div>
+              <div class="scan-result-value" id="scan-result-type">--</div>
+            </div>
+          </div>
+          <div class="scan-result-note" id="scan-result-note">Upload an image to generate a simulated OCR result.</div>
         </div>
       </div>
 
-      <!-- Item Details -->
       <div class="form-section">
         <div class="form-section-title">Item Details</div>
         <div class="form-group">
@@ -65,7 +86,7 @@
           <div class="form-group">
             <label for="item-cat">Category</label>
             <select id="item-cat">
-              <option value="">Select…</option>
+              <option value="">Select...</option>
               <option>Bakery</option>
               <option>Dairy</option>
               <option>Produce</option>
@@ -78,19 +99,18 @@
         </div>
         <div class="form-group">
           <label for="item-pickup">Pickup Window</label>
-          <input type="text" id="item-pickup" placeholder="e.g. Today 5–8 PM, weekday mornings…" />
+          <input type="text" id="item-pickup" placeholder="e.g. Today 5-8 PM, weekday mornings..." />
         </div>
       </div>
 
-      <!-- Location -->
       <div class="form-section">
         <div class="form-section-title">Location</div>
         <div class="form-group">
-          <label for="item-location">Neighborhood or Street Name</label>
-          <input type="text" id="item-location" placeholder="e.g. Oak Avenue, Midtown" />
+          <label for="item-location">Neighborhood or Zone</label>
+          <input type="text" id="item-location" placeholder="e.g. Oak Avenue zone, Midtown" />
           <div class="privacy-note">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Your exact address is never shown publicly. Listings display fuzzy location only.
+            This prototype only shows a coarse zone and a neutral handoff point.
           </div>
         </div>
       </div>
@@ -101,12 +121,10 @@
       <p style="text-align:center;font-size:0.75rem;color:var(--text-muted);margin-top:12px;">
         By posting, you confirm the item is safe and suitable for sharing.
       </p>
-
     </div>
 
-    <!-- Success Screen -->
     <div class="success-screen" id="success-screen">
-      <div class="badge-anim">🌿</div>
+      <div class="badge-anim">EH</div>
       <h2>Eco Hero Badge Unlocked!</h2>
       <p>Your listing is live. A neighbor will claim it shortly.<br>Thank you for reducing food waste.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
@@ -117,7 +135,6 @@
 
   </main>
 
-  <!-- Bottom Nav (mobile) -->
   <nav class="bottom-nav">
     <a href="index.html" data-page="index.html">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -149,78 +166,159 @@
     const scanSpinner = document.getElementById('scan-spinner');
     const scanText = document.getElementById('scan-text');
     const submitBtn = document.getElementById('submit-btn');
+    const scanResultCard = document.getElementById('scan-result-card');
+    const scanStatusBadge = document.getElementById('scan-status-badge');
+    const scanResultStatus = document.getElementById('scan-result-status');
+    const scanResultConfidence = document.getElementById('scan-result-confidence');
+    const scanResultDate = document.getElementById('scan-result-date');
+    const scanResultType = document.getElementById('scan-result-type');
+    const scanResultNote = document.getElementById('scan-result-note');
 
-    let scanPassed = false;
+    let activeScanToken = 0;
+    let previewUrl = null;
+    let scanResult = null;
 
-    // keyboard accessibility for upload area
-    uploadLabel.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') photoInput.click(); });
+    uploadLabel.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') photoInput.click();
+    });
+
+    function setScanState(mode, message) {
+      scanBox.className = `ai-scan-box${mode ? ' ' + mode : ''}`;
+      scanSpinner.style.display = mode === 'scanning' ? 'block' : 'none';
+      scanText.textContent = message;
+    }
+
+    function formatScanSummary(result) {
+      const parts = [
+        `${result.status === 'verified' ? 'Verified' : 'Needs review'}`,
+        `${Math.round(result.confidence * 100)}% confidence`,
+      ];
+      if (result.detectedDate) parts.push(`Date: ${result.detectedDate}`);
+      return parts.join(' · ');
+    }
+
+    function renderScanCard(result, noteOverride) {
+      scanResultCard.classList.add('show');
+
+      if (!result) {
+        scanStatusBadge.textContent = 'Pending';
+        scanStatusBadge.className = 'scan-status-badge';
+        scanResultStatus.textContent = 'Waiting for upload';
+        scanResultConfidence.textContent = '--';
+        scanResultDate.textContent = '--';
+        scanResultType.textContent = '--';
+        scanResultNote.textContent = noteOverride || 'Upload an image to generate a simulated OCR result.';
+        return;
+      }
+
+      const verified = result.status === 'verified';
+      scanStatusBadge.textContent = verified ? 'Verified' : 'Needs Review';
+      scanStatusBadge.className = `scan-status-badge ${verified ? 'verified' : 'review'}`;
+      scanResultStatus.textContent = verified ? 'Verified' : 'Needs review';
+      scanResultConfidence.textContent = `${Math.round(result.confidence * 100)}%`;
+      scanResultDate.textContent = result.detectedDate || 'Not confidently detected';
+      scanResultType.textContent = result.labelType ? result.labelType.replace('_', ' ') : '--';
+      scanResultNote.textContent = noteOverride || result.message || 'Scan complete.';
+    }
 
     photoInput.addEventListener('change', async () => {
       const file = photoInput.files[0];
+      const scanToken = ++activeScanToken;
       if (!file) return;
 
-      const url = URL.createObjectURL(file);
-      preview.src = url;
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      previewUrl = URL.createObjectURL(file);
+      preview.src = previewUrl;
       previewWrap.style.display = 'block';
       uploadLabel.style.display = 'none';
 
-      scanPassed = false;
+      scanResult = null;
       submitBtn.disabled = true;
-      scanBox.className = 'ai-scan-box scanning';
-      scanSpinner.style.display = 'block';
-      scanText.textContent = 'Scanning label…';
+      setScanState('scanning', 'Scanning label...');
+      renderScanCard({
+        status: 'needs_review',
+        confidence: 0,
+        detectedDate: null,
+        labelType: 'unknown',
+        message: 'Model is processing the label image.',
+      }, 'Model is processing the label image.');
 
-      const result = await simulateAIScan(file.name);
+      try {
+        const result = await simulateAIScan(file);
+        if (scanToken !== activeScanToken) return;
 
-      scanSpinner.style.display = 'none';
-      if (result.status === 'safe') {
-        scanBox.className = 'ai-scan-box safe';
-        scanText.innerHTML = `✓ ${result.message}`;
-        scanPassed = true;
-        submitBtn.disabled = false;
-      } else {
-        scanBox.className = 'ai-scan-box warn';
-        scanText.innerHTML = `⚠ ${result.message} <br><small style="opacity:0.8">Click "Change Photo" to retry.</small>`;
-        scanPassed = false;
+        scanResult = result;
+        renderScanCard(result);
+        if (result.status === 'verified') {
+          setScanState('safe', `${formatScanSummary(result)} · Ready to post.`);
+          submitBtn.disabled = false;
+        } else {
+          setScanState('warn', `${formatScanSummary(result)} · Please retake the photo for a clearer label.`);
+        }
+      } catch (error) {
+        if (scanToken !== activeScanToken) return;
+        scanResult = null;
+        setScanState('warn', 'Scan failed. Please upload a valid image and try again.');
+        renderScanCard(null, 'Scan failed. Please upload a valid image and try again.');
       }
     });
 
     function retryUpload() {
+      activeScanToken++;
+      scanResult = null;
       previewWrap.style.display = 'none';
       uploadLabel.style.display = 'block';
-      scanBox.className = 'ai-scan-box';
-      scanPassed = false;
       submitBtn.disabled = true;
       photoInput.value = '';
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        previewUrl = null;
+      }
+      preview.removeAttribute('src');
+      setScanState('', 'Upload a label photo to start scanning.');
+      renderScanCard(null);
     }
 
     function submitListing() {
-      if (!scanPassed) { showToast('Please upload a photo first.'); return; }
+      if (!scanResult || scanResult.status !== 'verified') {
+        showToast('Please complete AI verification first.');
+        return;
+      }
+
       const name = document.getElementById('item-name').value.trim();
-      if (!name) { showToast('Please enter an item name.'); return; }
       const cat = document.getElementById('item-cat').value;
-      if (!cat) { showToast('Please select a category.'); return; }
+      const zone = document.getElementById('item-location').value.trim();
+
+      if (!name) {
+        showToast('Please enter an item name.');
+        return;
+      }
+      if (!cat) {
+        showToast('Please select a category.');
+        return;
+      }
+      if (!zone) {
+        showToast('Please enter a neighborhood or zone.');
+        return;
+      }
 
       incrementStat('shared');
-      // Show whichever badge was just unlocked (or default to Eco Hero)
+      incrementStat('co2', 0.3);
+
       const badges = getUnlockedBadges();
-      const justUnlocked = badges.filter(b => b.unlocked);
-      const badge = justUnlocked[justUnlocked.length - 1] || badges[0];
+      const unlocked = badges.filter(b => b.unlocked);
+      const badge = unlocked[unlocked.length - 1] || badges[0];
+
       document.querySelector('.badge-anim').textContent = badge.icon;
-      document.querySelector('#success-screen h2').textContent = badge.name + ' Badge Unlocked!';
+      document.querySelector('#success-screen h2').textContent = `${badge.name} Badge Unlocked!`;
       document.getElementById('share-form-wrap').classList.add('hidden');
       document.getElementById('success-screen').classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function resetForm() {
-      scanPassed = false;
-      previewWrap.style.display = 'none';
-      uploadLabel.style.display = 'block';
-      scanBox.className = 'ai-scan-box';
-      submitBtn.disabled = true;
-      photoInput.value = '';
-      ['item-name','item-qty','item-cat','item-pickup','item-location'].forEach(id => {
+      retryUpload();
+      ['item-name', 'item-qty', 'item-cat', 'item-pickup', 'item-location'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
@@ -228,6 +326,8 @@
       document.getElementById('success-screen').classList.remove('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    renderScanCard(null);
   </script>
 </body>
 </html>

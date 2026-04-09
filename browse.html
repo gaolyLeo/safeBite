@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Browse — SafeBite</title>
+  <title>Browse - SafeBite</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -33,7 +33,6 @@
 </head>
 <body>
 
-  <!-- Top Nav (desktop) -->
   <nav class="top-nav">
     <div class="logo"><span class="logo-dot"></span>Safe<em>Bite</em></div>
     <div class="top-nav-links">
@@ -50,51 +49,44 @@
       <span class="tag">Browse</span> Available Food
     </h1>
 
-    <!-- Search -->
     <div class="search-bar">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="text" id="search-input" placeholder="Search items…" />
+      <input type="text" id="search-input" placeholder="Search items or zones..." />
     </div>
 
-    <!-- Filter Chips -->
     <div class="filter-chips" id="filter-chips">
       <button class="chip active" data-filter="all">All</button>
-      <button class="chip" data-filter="Bakery">🥖 Bakery</button>
-      <button class="chip" data-filter="Dairy">🥛 Dairy</button>
-      <button class="chip" data-filter="Produce">🍎 Produce</button>
-      <button class="chip" data-filter="Pantry">🥫 Pantry</button>
-      <button class="chip" data-filter="commute">🚗 Commute Match</button>
+      <button class="chip" data-filter="Bakery">Bakery</button>
+      <button class="chip" data-filter="Dairy">Dairy</button>
+      <button class="chip" data-filter="Produce">Produce</button>
+      <button class="chip" data-filter="Pantry">Pantry</button>
+      <button class="chip" data-filter="commute">Commute Match</button>
     </div>
 
-    <!-- Commute Banner -->
     <div class="commute-banner">
-      <div class="cb-icon">🚗</div>
+      <div class="cb-icon">🛤️</div>
       <div class="cb-text">
         <strong>2 items match your commute route</strong>
-        <span>Pick them up on the way — no extra driving needed</span>
+        <span>Pick them up on the way with no extra driving</span>
       </div>
       <button class="btn btn-sm btn-green" onclick="filterCommute()">View</button>
     </div>
 
-    <!-- Food Grid -->
     <div class="food-grid" id="food-grid"></div>
     <p id="empty-msg" style="display:none;text-align:center;color:var(--text-muted);padding:40px 16px;font-size:0.9rem;">No items found. Try a different filter.</p>
 
   </main>
 
-  <!-- Claim Modal -->
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal modal-close-area">
       <div class="modal-handle"></div>
 
-      <!-- Map -->
       <div id="item-map"></div>
       <div class="map-legend">
-        <span><span class="legend-dot blue"></span>Your location</span>
-        <span><span class="legend-dot green"></span>Approximate area (privacy protected)</span>
+        <span><span class="legend-dot blue"></span>Your area</span>
+        <span><span class="legend-dot green"></span>Approximate pickup zone</span>
       </div>
 
-      <!-- Item info -->
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
         <div style="font-size:2.4rem;flex-shrink:0;" id="modal-emoji"></div>
         <div>
@@ -103,24 +95,49 @@
         </div>
       </div>
 
+      <div class="scan-result-card show" id="modal-scan-card" style="margin-top:0;">
+        <div class="scan-result-head">
+          <div class="scan-result-title">AI Verification Summary</div>
+          <span class="scan-status-badge" id="modal-scan-badge">Verified</span>
+        </div>
+        <div class="scan-result-grid">
+          <div class="scan-result-item">
+            <div class="scan-result-label">Status</div>
+            <div class="scan-result-value" id="modal-scan-status">Verified</div>
+          </div>
+          <div class="scan-result-item">
+            <div class="scan-result-label">Confidence</div>
+            <div class="scan-result-value" id="modal-scan-confidence">--</div>
+          </div>
+          <div class="scan-result-item">
+            <div class="scan-result-label">Detected Date</div>
+            <div class="scan-result-value" id="modal-scan-date">--</div>
+          </div>
+          <div class="scan-result-item">
+            <div class="scan-result-label">Label Type</div>
+            <div class="scan-result-value" id="modal-scan-type">Expiry</div>
+          </div>
+        </div>
+        <div class="scan-result-note" id="modal-scan-note">Packaged label appears readable in this prototype scan.</div>
+      </div>
+
       <div class="safety-box">
-        <strong>⚠ Food Safety Notice · EcoShare Legal Shield</strong>
-        This item has passed AI label verification (Clause 3.1). You are responsible for inspecting the condition upon pickup. Per the Good Samaritan Food Sharing Agreement (§ 4.2), the donor is exempt from liability for unintentional harm when items are shared in good faith. Do not consume if packaging is damaged.
+        <strong>Food Safety Notice · Demo Safety Layer</strong>
+        This prototype simulates AI label verification and privacy masking. Please inspect the item at pickup and use a neutral meeting point for handoff.
       </div>
       <label class="check-row">
         <input type="checkbox" id="safety-check" onchange="toggleClaim()" />
-        I accept the EcoShare Food Sharing Agreement and safety guidelines.
+        I understand this is an approximate pickup zone and agree to inspect the item before collecting it.
       </label>
       <div class="neutral-spot-box" id="neutral-spot-box" style="display:none;background:var(--green-light);border:1.5px solid rgba(34,197,94,0.4);border-radius:10px;padding:12px 14px;margin-bottom:16px;">
-        <div style="font-size:0.75rem;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">📍 Suggested Neutral Pickup Spot</div>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Suggested neutral pickup spot</div>
         <div id="neutral-spot-text" style="font-size:0.88rem;color:var(--text);font-weight:500;"></div>
-        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Your exact address is never shared. Arrange final details via in-app message.</div>
+        <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">Only the zone is shown in this demo. Final details should be agreed in chat.</div>
       </div>
-      <button class="btn btn-green btn-block" id="claim-btn" disabled onclick="claimItem()">Claim This Item</button>
+      <button class="btn btn-green btn-block" id="claim-btn" disabled>Claim This Item</button>
     </div>
   </div>
 
-  <!-- Bottom Nav (mobile) -->
   <nav class="bottom-nav">
     <a href="index.html" data-page="index.html">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -148,48 +165,116 @@
     let activeFilter = 'all';
     let activeItemId = null;
     let mapInstance = null;
+    let mapLayers = [];
 
-    // ===== Grid =====
+    function createPill(text, cls) {
+      const pill = document.createElement('span');
+      pill.className = `pill ${cls}`;
+      pill.textContent = text;
+      return pill;
+    }
+
+    function createMetaRow(iconMarkup, text, extraNode) {
+      const row = document.createElement('div');
+      row.className = 'meta-row';
+      row.innerHTML = iconMarkup;
+      row.append(document.createTextNode(text));
+      if (extraNode) row.appendChild(extraNode);
+      return row;
+    }
+
+    function buildVerificationSnapshot(item) {
+      const seed = hashString(`modal:${item.id}:${item.name}:${item.expiry}`);
+      const confidence = 0.8 + ((seed % 15) / 100);
+      return {
+        status: item.safe ? 'verified' : 'needs_review',
+        confidence: Math.min(0.94, Number(confidence.toFixed(2))),
+        detectedDate: item.expiry,
+        labelType: 'expiry',
+        note: item.safe
+          ? 'Packaged label appears readable in this prototype scan.'
+          : 'Label appears partially unclear. Manual inspection is recommended.',
+      };
+    }
+
+    function renderModalScanCard(item) {
+      const result = buildVerificationSnapshot(item);
+      const verified = result.status === 'verified';
+      document.getElementById('modal-scan-badge').textContent = verified ? 'Verified' : 'Needs Review';
+      document.getElementById('modal-scan-badge').className = `scan-status-badge ${verified ? 'verified' : 'review'}`;
+      document.getElementById('modal-scan-status').textContent = verified ? 'Verified' : 'Needs review';
+      document.getElementById('modal-scan-confidence').textContent = `${Math.round(result.confidence * 100)}%`;
+      document.getElementById('modal-scan-date').textContent = result.detectedDate || '--';
+      document.getElementById('modal-scan-type').textContent = result.labelType === 'best_before' ? 'Best before' : 'Expiry';
+      document.getElementById('modal-scan-note').textContent = result.note;
+    }
+
     function renderGrid(items) {
       const grid = document.getElementById('food-grid');
       const empty = document.getElementById('empty-msg');
       const claimed = getClaimedIds();
-      items = items.filter(i => !claimed.includes(i.id));
-      if (!items.length) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+      const visibleItems = items.filter(i => !claimed.includes(i.id));
+
+      grid.replaceChildren();
+      if (!visibleItems.length) {
+        empty.style.display = 'block';
+        return;
+      }
+
       empty.style.display = 'none';
-      grid.innerHTML = items.map(item => {
+      visibleItems.forEach(item => {
         const exp = expiryLabel(item.expiry);
-        return `
-          <div class="food-card card" onclick="openModal(${item.id})">
-            <div class="food-card-img">${item.emoji}</div>
-            <div class="food-card-body">
-              <div class="food-card-title">${item.name}</div>
-              <div class="food-card-meta">
-                <div class="meta-row">
-                  <span class="pill ${exp.cls}">${exp.text}</span>
-                  ${item.commuteMatch ? '<span class="pill pill-gray">🚗 Route Match</span>' : ''}
-                </div>
-                <div class="meta-row">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  ~${item.distance} km away
-                </div>
-                <div class="meta-row">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  ${item.pickupWindow}
-                  <span class="eco-tag">≤1 km</span>
-                </div>
-              </div>
-            </div>
-          </div>`;
-      }).join('');
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'food-card card';
+        card.addEventListener('click', () => openModal(item.id));
+
+        const img = document.createElement('div');
+        img.className = 'food-card-img';
+        img.textContent = item.emoji;
+
+        const body = document.createElement('div');
+        body.className = 'food-card-body';
+
+        const title = document.createElement('div');
+        title.className = 'food-card-title';
+        title.textContent = item.name;
+
+        const meta = document.createElement('div');
+        meta.className = 'food-card-meta';
+
+        const row1 = document.createElement('div');
+        row1.className = 'meta-row';
+        row1.appendChild(createPill(exp.text, exp.cls));
+        if (item.commuteMatch) row1.appendChild(createPill('Route Match', 'pill-gray'));
+
+        const row2 = createMetaRow(
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+          `~${item.distance} km away · ${item.area}`
+        );
+
+        const ecoTag = document.createElement('span');
+        ecoTag.className = 'eco-tag';
+        ecoTag.textContent = 'Eco zone';
+        const row3 = createMetaRow(
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+          item.pickupWindow + ' ',
+          ecoTag
+        );
+
+        meta.append(row1, row2, row3);
+        body.append(title, meta);
+        card.append(img, body);
+        grid.appendChild(card);
+      });
     }
 
     function applyFilters() {
-      const q = document.getElementById('search-input').value.toLowerCase();
+      const q = document.getElementById('search-input').value.trim().toLowerCase();
       let items = LISTINGS;
       if (activeFilter === 'commute') items = items.filter(i => i.commuteMatch);
       else if (activeFilter !== 'all') items = items.filter(i => i.category === activeFilter);
-      if (q) items = items.filter(i => i.name.toLowerCase().includes(q));
+      if (q) items = items.filter(i => i.name.toLowerCase().includes(q) || i.area.toLowerCase().includes(q));
       renderGrid(items);
     }
 
@@ -210,16 +295,9 @@
 
     document.getElementById('search-input').addEventListener('input', applyFilters);
 
-    // ===== Map =====
-    function buildMap(item) {
-      if (mapInstance) { mapInstance.remove(); mapInstance = null; }
-
-      // Fuzzy offset: shift the display center slightly from real coords
-      const fLat = item.lat + (Math.random() - 0.5) * 0.003;
-      const fLng = item.lng + (Math.random() - 0.5) * 0.003;
-
+    function ensureMap() {
+      if (mapInstance) return mapInstance;
       mapInstance = L.map('item-map', {
-        center: [fLat, fLng],
         zoom: 15,
         zoomControl: false,
         attributionControl: false,
@@ -234,70 +312,90 @@
         subdomains: 'abcd',
       }).addTo(mapInstance);
 
-      // Fuzzy privacy circle
-      L.circle([fLat, fLng], {
+      return mapInstance;
+    }
+
+    function clearMapLayers() {
+      mapLayers.forEach(layer => layer.remove());
+      mapLayers = [];
+    }
+
+    function buildMap(item) {
+      const map = ensureMap();
+      clearMapLayers();
+
+      const masked = getMaskedCoords(item);
+      map.setView([masked.lat, masked.lng], 15);
+
+      mapLayers.push(L.circle([masked.lat, masked.lng], {
         radius: 280,
         color: '#16A34A',
         fillColor: '#22C55E',
         fillOpacity: 0.12,
         weight: 2,
         dashArray: '7 5',
-      }).addTo(mapInstance);
+      }).addTo(map));
 
-      // User dot
-      const userMarker = L.circleMarker([USER_LAT, USER_LNG], {
+      const userMarker = L.circleMarker([USER_AREA.lat, USER_AREA.lng], {
         radius: 7,
         color: '#fff',
         fillColor: '#3B82F6',
         fillOpacity: 1,
         weight: 2.5,
-      }).addTo(mapInstance);
+      }).addTo(map);
       userMarker.bindTooltip('You', {
-        permanent: true, direction: 'right',
+        permanent: true,
+        direction: 'right',
         className: 'user-tip',
         offset: [8, 0],
       }).openTooltip();
+      mapLayers.push(userMarker);
 
-      // Commute route animated dashed line
       if (item.commuteMatch) {
-        const routeLine = L.polyline(
-          [[USER_LAT, USER_LNG], [fLat, fLng]],
+        mapLayers.push(L.polyline(
+          [[USER_AREA.lat, USER_AREA.lng], [masked.lat, masked.lng]],
           { color: '#22C55E', weight: 2.5, dashArray: '8 5', opacity: 0.85, className: 'commute-polyline' }
-        ).addTo(mapInstance);
+        ).addTo(map));
       }
 
-      // Privacy lock label
       const privacyIcon = L.divIcon({
         className: '',
-        html: `<div style="background:rgba(15,42,26,0.82);color:#86EFAC;font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:8px;white-space:nowrap;backdrop-filter:blur(4px);">🔒 Exact location hidden</div>`,
+        html: '<div style="background:rgba(15,42,26,0.82);color:#86EFAC;font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:8px;white-space:nowrap;backdrop-filter:blur(4px);">Privacy zone only</div>',
         iconAnchor: [0, 0],
       });
-      L.marker([fLat + 0.001, fLng + 0.001], { icon: privacyIcon, interactive: false }).addTo(mapInstance);
+      mapLayers.push(L.marker([masked.lat + 0.001, masked.lng + 0.001], { icon: privacyIcon, interactive: false }).addTo(map));
 
       setTimeout(() => mapInstance && mapInstance.invalidateSize(), 50);
     }
 
-    // ===== Modal =====
     function openModal(id) {
       activeItemId = id;
       const item = LISTINGS.find(i => i.id === id);
-      const exp = expiryLabel(item.expiry);
+      if (!item) {
+        showToast('Item not found.');
+        return;
+      }
 
+      const exp = expiryLabel(item.expiry);
       document.getElementById('modal-emoji').textContent = item.emoji;
       document.getElementById('modal-title').textContent = item.name;
-      document.getElementById('modal-detail').innerHTML = `
-        <span class="pill ${exp.cls}">${exp.text}</span>
-        <span class="pill pill-gray">${item.category}</span>
-        <span class="pill pill-gray">~${item.distance} km</span>
-        <span class="pill pill-gray">📅 ${item.pickupWindow}</span>
-      `;
+
+      const detail = document.getElementById('modal-detail');
+      detail.replaceChildren(
+        createPill(exp.text, exp.cls),
+        createPill(item.category, 'pill-gray'),
+        createPill(`~${item.distance} km`, 'pill-gray'),
+        createPill(item.area, 'pill-gray'),
+        createPill(item.pickupWindow, 'pill-gray')
+      );
+      renderModalScanCard(item);
+
       document.getElementById('safety-check').checked = false;
       document.getElementById('claim-btn').disabled = true;
       document.getElementById('neutral-spot-box').style.display = 'none';
       document.getElementById('neutral-spot-text').textContent = item.neutralSpot || '';
       document.getElementById('modal-overlay').classList.add('open');
 
-      // Build map after overlay is visible
       requestAnimationFrame(() => buildMap(item));
     }
 
@@ -307,7 +405,6 @@
 
     function closeModal() {
       document.getElementById('modal-overlay').classList.remove('open');
-      if (mapInstance) { mapInstance.remove(); mapInstance = null; }
     }
 
     function toggleClaim() {
@@ -317,13 +414,15 @@
     }
 
     function claimItem() {
+      if (!activeItemId) return;
       addClaimedId(activeItemId);
       incrementStat('claimed');
       closeModal();
       applyFilters();
-      showToast('✓ Item claimed! Head to the suggested pickup spot.');
+      showToast('Item claimed. Head to the suggested pickup spot.');
     }
 
+    document.getElementById('claim-btn').addEventListener('click', claimItem);
     renderGrid(LISTINGS);
   </script>
 </body>
