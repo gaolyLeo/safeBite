@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Profile — SafeBite</title>
+  <title>Profile - SafeBite</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- Top Nav (desktop) -->
   <nav class="top-nav">
     <div class="logo"><span class="logo-dot"></span>Safe<em>Bite</em></div>
     <div class="top-nav-links">
@@ -20,32 +19,25 @@
   </nav>
 
   <main class="page">
-
-    <!-- Profile Header -->
     <div class="profile-header">
-      <div class="avatar">👤</div>
+      <div class="avatar">AC</div>
       <div>
         <h2>Alex Chen</h2>
         <div class="profile-sub">Member since April 2026 · Eco Hero</div>
       </div>
     </div>
 
-    <!-- Stats -->
     <div class="profile-stats" id="profile-stats"></div>
 
-    <!-- Badges -->
     <h2 class="section-heading"><span class="tag">Badges</span> Your Achievements</h2>
     <div class="badges-grid" id="badges-grid"></div>
 
     <div class="divider"></div>
 
-    <!-- Activity Feed -->
     <h2 class="section-heading"><span class="tag">Activity</span> Recent History</h2>
     <div class="activity-list" id="activity-list"></div>
-
   </main>
 
-  <!-- Bottom Nav (mobile) -->
   <nav class="bottom-nav">
     <a href="index.html" data-page="index.html">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -69,65 +61,159 @@
 
   <script src="js/app.js"></script>
   <script>
-    function renderProfile() {
-      seedStatsIfNew();
-      const s = getStats();
+    function createStatCard(number, label) {
+      const card = document.createElement('div');
+      card.className = 'pstat';
 
-      // Stats
-      const statsEl = document.getElementById('profile-stats');
+      const num = document.createElement('div');
+      num.className = 'num';
+      num.textContent = number;
+
+      const lbl = document.createElement('div');
+      lbl.className = 'lbl';
+      lbl.textContent = label;
+
+      card.append(num, lbl);
+      return card;
+    }
+
+    function createCo2Card(stats) {
       const co2Goal = 10;
-      const circ = 2 * Math.PI * 36; // r=36
-      const pct = Math.min(s.co2 / co2Goal, 1);
-      const trees = Math.max(1, Math.round(s.co2 * 2.5));
-      statsEl.innerHTML = `
-        <div class="pstat"><div class="num">${s.shared}</div><div class="lbl">Items Shared</div></div>
-        <div class="pstat"><div class="num">${s.claimed}</div><div class="lbl">Items Claimed</div></div>
-        <div class="pstat co2-pstat">
-          <svg class="co2-ring" viewBox="0 0 80 80" width="80" height="80">
-            <circle class="co2-track" cx="40" cy="40" r="36"/>
-            <circle class="co2-fill" id="co2-fill" cx="40" cy="40" r="36"
-              stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${circ.toFixed(1)}"/>
-            <text x="40" y="37" text-anchor="middle" dominant-baseline="middle" class="co2-center-num">${s.co2}</text>
-            <text x="40" y="52" text-anchor="middle" class="co2-center-unit">kg CO₂</text>
-          </svg>
-          <div class="lbl">Carbon Saved</div>
-          <div class="co2-equiv">🌱 ≈ ${trees} trees planted</div>
-        </div>
-      `;
-      // Animate ring after DOM paint
+      const circ = 2 * Math.PI * 36;
+      const pct = Math.min(stats.co2 / co2Goal, 1);
+      const trees = Math.max(1, Math.round(stats.co2 * 2.5));
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'pstat co2-pstat';
+
+      const svgNS = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('class', 'co2-ring');
+      svg.setAttribute('viewBox', '0 0 80 80');
+      svg.setAttribute('width', '80');
+      svg.setAttribute('height', '80');
+
+      const track = document.createElementNS(svgNS, 'circle');
+      track.setAttribute('class', 'co2-track');
+      track.setAttribute('cx', '40');
+      track.setAttribute('cy', '40');
+      track.setAttribute('r', '36');
+
+      const fill = document.createElementNS(svgNS, 'circle');
+      fill.setAttribute('class', 'co2-fill');
+      fill.setAttribute('id', 'co2-fill');
+      fill.setAttribute('cx', '40');
+      fill.setAttribute('cy', '40');
+      fill.setAttribute('r', '36');
+      fill.setAttribute('stroke-dasharray', circ.toFixed(1));
+      fill.setAttribute('stroke-dashoffset', circ.toFixed(1));
+
+      const numberText = document.createElementNS(svgNS, 'text');
+      numberText.setAttribute('x', '40');
+      numberText.setAttribute('y', '37');
+      numberText.setAttribute('text-anchor', 'middle');
+      numberText.setAttribute('dominant-baseline', 'middle');
+      numberText.setAttribute('class', 'co2-center-num');
+      numberText.textContent = stats.co2;
+
+      const unitText = document.createElementNS(svgNS, 'text');
+      unitText.setAttribute('x', '40');
+      unitText.setAttribute('y', '52');
+      unitText.setAttribute('text-anchor', 'middle');
+      unitText.setAttribute('class', 'co2-center-unit');
+      unitText.textContent = 'kg CO2';
+
+      svg.append(track, fill, numberText, unitText);
+
+      const lbl = document.createElement('div');
+      lbl.className = 'lbl';
+      lbl.textContent = 'Carbon Saved';
+
+      const equiv = document.createElement('div');
+      equiv.className = 'co2-equiv';
+      equiv.textContent = `≈ ${trees} trees planted`;
+
+      wrapper.append(svg, lbl, equiv);
+
       requestAnimationFrame(() => {
-        const fill = document.getElementById('co2-fill');
-        if (fill) fill.style.strokeDashoffset = (circ * (1 - pct)).toFixed(1);
+        fill.style.strokeDashoffset = (circ * (1 - pct)).toFixed(1);
       });
 
-      // Badges
-      const badgesEl = document.getElementById('badges-grid');
-      badgesEl.innerHTML = getUnlockedBadges().map(b => `
-        <div class="badge-card ${b.unlocked ? 'unlocked' : 'locked'}" title="${b.unlocked ? 'Unlocked' : 'Locked — ' + b.desc}">
-          <div class="badge-icon">${b.icon}</div>
-          <div class="badge-name">${b.name}</div>
-          <div class="badge-desc">${b.desc}</div>
-        </div>
-      `).join('');
+      return wrapper;
+    }
 
-      // Activity Feed
+    function createBadgeCard(badge) {
+      const card = document.createElement('div');
+      card.className = `badge-card ${badge.unlocked ? 'unlocked' : 'locked'}`;
+      card.title = badge.unlocked ? 'Unlocked' : `Locked - ${badge.desc}`;
+
+      const icon = document.createElement('div');
+      icon.className = 'badge-icon';
+      icon.textContent = badge.icon;
+
+      const name = document.createElement('div');
+      name.className = 'badge-name';
+      name.textContent = badge.name;
+
+      const desc = document.createElement('div');
+      desc.className = 'badge-desc';
+      desc.textContent = badge.desc;
+
+      card.append(icon, name, desc);
+      return card;
+    }
+
+    function createActivityItem(activity) {
+      const item = document.createElement('div');
+      item.className = 'activity-item';
+
+      const icon = document.createElement('div');
+      icon.className = 'activity-icon';
+      icon.textContent = activity.icon;
+
+      const textWrap = document.createElement('div');
+      textWrap.className = 'activity-text';
+
+      const strong = document.createElement('strong');
+      strong.textContent = activity.text;
+
+      const sub = document.createElement('span');
+      sub.textContent = activity.sub;
+
+      textWrap.append(strong, sub);
+
+      const pill = document.createElement('span');
+      pill.className = `pill ${activity.pillCls} activity-pill`;
+      pill.textContent = activity.pill;
+
+      item.append(icon, textWrap, pill);
+      return item;
+    }
+
+    function renderProfile() {
+      seedStatsIfNew();
+      const stats = getStats();
+
+      const statsEl = document.getElementById('profile-stats');
+      statsEl.replaceChildren(
+        createStatCard(stats.shared, 'Items Shared'),
+        createStatCard(stats.claimed, 'Items Claimed'),
+        createCo2Card(stats)
+      );
+
+      const badgesEl = document.getElementById('badges-grid');
+      badgesEl.replaceChildren(...getUnlockedBadges().map(createBadgeCard));
+
       const activities = [
-        { icon: '🥖', text: 'Shared Sourdough Bread', sub: '2 days ago', pill: 'Shared', pillCls: 'pill-green' },
-        { icon: '🤝', text: 'Claimed Organic Milk', sub: '3 days ago', pill: 'Claimed', pillCls: 'pill-gray' },
-        { icon: '🥛', text: 'Shared Whole Wheat Loaf', sub: '5 days ago', pill: 'Shared', pillCls: 'pill-green' },
-        { icon: '🚗', text: 'Used Commute Relay', sub: '1 week ago', pill: 'Route Match', pillCls: 'pill-amber' },
-        { icon: '🍎', text: 'Claimed Fresh Apples', sub: '1 week ago', pill: 'Claimed', pillCls: 'pill-gray' },
+        { icon: 'SB', text: 'Shared Sourdough Bread', sub: '2 days ago', pill: 'Shared', pillCls: 'pill-green' },
+        { icon: 'OM', text: 'Claimed Organic Milk', sub: '3 days ago', pill: 'Claimed', pillCls: 'pill-gray' },
+        { icon: 'WL', text: 'Shared Whole Wheat Loaf', sub: '5 days ago', pill: 'Shared', pillCls: 'pill-green' },
+        { icon: 'CR', text: 'Used Commute Relay', sub: '1 week ago', pill: 'Route Match', pillCls: 'pill-amber' },
+        { icon: 'FA', text: 'Claimed Fresh Apples', sub: '1 week ago', pill: 'Claimed', pillCls: 'pill-gray' },
       ];
-      document.getElementById('activity-list').innerHTML = activities.map(a => `
-        <div class="activity-item">
-          <div class="activity-icon">${a.icon}</div>
-          <div class="activity-text">
-            <strong>${a.text}</strong>
-            <span>${a.sub}</span>
-          </div>
-          <span class="pill ${a.pillCls} activity-pill">${a.pill}</span>
-        </div>
-      `).join('');
+
+      const activityEl = document.getElementById('activity-list');
+      activityEl.replaceChildren(...activities.map(createActivityItem));
     }
 
     renderProfile();
