@@ -115,12 +115,12 @@ function simulateAIScan(file) {
 
 // ===== Badge System =====
 const BADGES = [
-  { id: 'eco_hero', icon: 'EH', name: 'Eco Hero', desc: 'Share your first item', threshold: 1, stat: 'shared' },
-  { id: 'first_claim', icon: 'GN', name: 'Good Neighbor', desc: 'Claim your first item', threshold: 1, stat: 'claimed' },
-  { id: 'commute_rescuer', icon: 'CR', name: 'Commute Rescuer', desc: 'Use commute matching', threshold: 1, stat: 'commute' },
-  { id: 'super_sharer', icon: 'SS', name: 'Super Sharer', desc: 'Share 5 items', threshold: 5, stat: 'shared' },
-  { id: 'carbon_saver', icon: 'CO2', name: 'Carbon Saver', desc: 'Save 1 kg CO2', threshold: 1, stat: 'co2' },
-  { id: 'community_star', icon: 'CS', name: 'Community Star', desc: 'Earn 10+ ratings', threshold: 10, stat: 'ratings' },
+  { id: 'eco_hero', icon: '🌿', name: 'Eco Hero', desc: 'Share your first item', threshold: 1, stat: 'shared' },
+  { id: 'first_claim', icon: '🤝', name: 'Good Neighbor', desc: 'Claim your first item', threshold: 1, stat: 'claimed' },
+  { id: 'commute_rescuer', icon: '🛤️', name: 'Commute Rescuer', desc: 'Use commute matching', threshold: 1, stat: 'commute' },
+  { id: 'super_sharer', icon: '🏅', name: 'Super Sharer', desc: 'Share 5 items', threshold: 5, stat: 'shared' },
+  { id: 'carbon_saver', icon: '♻️', name: 'Carbon Saver', desc: 'Save 1 kg CO2', threshold: 1, stat: 'co2' },
+  { id: 'community_star', icon: '🌟', name: 'Community Star', desc: 'Earn 10+ ratings', threshold: 10, stat: 'ratings' },
 ];
 
 function getStats() {
