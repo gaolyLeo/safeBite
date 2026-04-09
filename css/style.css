@@ -36,6 +36,14 @@ body {
   padding-bottom: calc(var(--bottom-nav-height) + 16px);
   line-height: 1.5;
 }
+
+/* ===== iOS Safe Area (Dynamic Island / notch) ===== */
+@media (max-width: 768px) {
+  body {
+    padding-top: 16px;
+    padding-bottom: calc(var(--bottom-nav-height) + 16px);
+  }
+}
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
