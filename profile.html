@@ -20,7 +20,7 @@
 
   <main class="page">
     <div class="profile-header">
-      <div class="avatar">AC</div>
+      <div class="avatar">👤</div>
       <div>
         <h2>Alex Chen</h2>
         <div class="profile-sub">Member since April 2026 · Eco Hero</div>
@@ -131,7 +131,7 @@
 
       const equiv = document.createElement('div');
       equiv.className = 'co2-equiv';
-      equiv.textContent = `≈ ${trees} trees planted`;
+      equiv.textContent = `🌱 ≈ ${trees} trees planted`;
 
       wrapper.append(svg, lbl, equiv);
 
@@ -205,11 +205,11 @@
       badgesEl.replaceChildren(...getUnlockedBadges().map(createBadgeCard));
 
       const activities = [
-        { icon: 'SB', text: 'Shared Sourdough Bread', sub: '2 days ago', pill: 'Shared', pillCls: 'pill-green' },
-        { icon: 'OM', text: 'Claimed Organic Milk', sub: '3 days ago', pill: 'Claimed', pillCls: 'pill-gray' },
-        { icon: 'WL', text: 'Shared Whole Wheat Loaf', sub: '5 days ago', pill: 'Shared', pillCls: 'pill-green' },
-        { icon: 'CR', text: 'Used Commute Relay', sub: '1 week ago', pill: 'Route Match', pillCls: 'pill-amber' },
-        { icon: 'FA', text: 'Claimed Fresh Apples', sub: '1 week ago', pill: 'Claimed', pillCls: 'pill-gray' },
+        { icon: '🥖', text: 'Shared Sourdough Bread', sub: '2 days ago', pill: 'Shared', pillCls: 'pill-green' },
+        { icon: '🥛', text: 'Claimed Organic Milk', sub: '3 days ago', pill: 'Claimed', pillCls: 'pill-gray' },
+        { icon: '🍞', text: 'Shared Whole Wheat Loaf', sub: '5 days ago', pill: 'Shared', pillCls: 'pill-green' },
+        { icon: '🛤️', text: 'Used Commute Relay', sub: '1 week ago', pill: 'Route Match', pillCls: 'pill-amber' },
+        { icon: '🍎', text: 'Claimed Fresh Apples', sub: '1 week ago', pill: 'Claimed', pillCls: 'pill-gray' },
       ];
 
       const activityEl = document.getElementById('activity-list');
