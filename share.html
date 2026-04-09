@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Share Food — SafeBite</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Nav (desktop) -->
+  <nav class="top-nav">
+    <div class="logo"><span class="logo-dot"></span>Safe<em>Bite</em></div>
+    <div class="top-nav-links">
+      <a href="index.html" data-page="index.html">Home</a>
+      <a href="browse.html" data-page="browse.html">Browse</a>
+      <a href="share.html" data-page="share.html" class="active">Share Food</a>
+      <a href="profile.html" data-page="profile.html">Profile</a>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <!-- Form -->
+    <div class="share-form-wrap" id="share-form-wrap">
+
+      <h1 class="section-heading" style="font-size:1.35rem;letter-spacing:-0.5px;margin-bottom:4px;">
+        <span class="tag">Share</span> List an Item
+      </h1>
+      <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:20px;">Only list sealed, packaged items in good condition.</p>
+
+      <!-- Photo Upload -->
+      <div class="form-section">
+        <div class="form-section-title">Photo &amp; AI Verification</div>
+
+        <div class="photo-preview-wrap" id="photo-preview-wrap" style="display:none;margin-bottom:12px;">
+          <img id="photo-preview" src="" alt="Preview" style="width:100%;height:200px;object-fit:cover;border-radius:10px;display:block;" />
+          <button type="button" class="btn btn-sm" onclick="retryUpload()" style="margin-top:8px;width:100%;background:var(--border-light);color:var(--text-secondary);border:1.5px solid var(--border);">Change Photo</button>
+        </div>
+
+        <div class="upload-area" id="upload-label" onclick="document.getElementById('photo-input').click()" role="button" tabindex="0">
+          <span class="upload-icon">📷</span>
+          <p><strong>Tap to upload a photo</strong><br>AI will scan the expiry label automatically</p>
+        </div>
+        <input type="file" id="photo-input" accept="image/*" style="display:none" />
+
+        <div class="ai-scan-box" id="ai-scan-box">
+          <div class="spinner" id="scan-spinner"></div>
+          <span id="scan-text">Scanning label…</span>
+        </div>
+      </div>
+
+      <!-- Item Details -->
+      <div class="form-section">
+        <div class="form-section-title">Item Details</div>
+        <div class="form-group">
+          <label for="item-name">Item Name</label>
+          <input type="text" id="item-name" placeholder="e.g. Organic Whole Milk 1L" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="item-qty">Quantity</label>
+            <input type="text" id="item-qty" placeholder="e.g. 2 packs" />
+          </div>
+          <div class="form-group">
+            <label for="item-cat">Category</label>
+            <select id="item-cat">
+              <option value="">Select…</option>
+              <option>Bakery</option>
+              <option>Dairy</option>
+              <option>Produce</option>
+              <option>Pantry</option>
+              <option>Beverages</option>
+              <option>Snacks</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="item-pickup">Pickup Window</label>
+          <input type="text" id="item-pickup" placeholder="e.g. Today 5–8 PM, weekday mornings…" />
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="form-section">
+        <div class="form-section-title">Location</div>
+        <div class="form-group">
+          <label for="item-location">Neighborhood or Street Name</label>
+          <input type="text" id="item-location" placeholder="e.g. Oak Avenue, Midtown" />
+          <div class="privacy-note">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Your exact address is never shown publicly. Listings display fuzzy location only.
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-green btn-block" id="submit-btn" onclick="submitListing()" disabled style="font-size:1rem;padding:14px;">
+        Post Listing
+      </button>
+      <p style="text-align:center;font-size:0.75rem;color:var(--text-muted);margin-top:12px;">
+        By posting, you confirm the item is safe and suitable for sharing.
+      </p>
+
+    </div>
+
+    <!-- Success Screen -->
+    <div class="success-screen" id="success-screen">
+      <div class="badge-anim">🌿</div>
+      <h2>Eco Hero Badge Unlocked!</h2>
+      <p>Your listing is live. A neighbor will claim it shortly.<br>Thank you for reducing food waste.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="browse.html" class="btn btn-surface">Browse Food</a>
+        <button class="btn btn-green" onclick="resetForm()">Share Another</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Nav (mobile) -->
+  <nav class="bottom-nav">
+    <a href="index.html" data-page="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <a href="browse.html" data-page="browse.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      Browse
+    </a>
+    <a href="share.html" data-page="share.html" class="active">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+      Share
+    </a>
+    <a href="profile.html" data-page="profile.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </a>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    const photoInput = document.getElementById('photo-input');
+    const previewWrap = document.getElementById('photo-preview-wrap');
+    const preview = document.getElementById('photo-preview');
+    const uploadLabel = document.getElementById('upload-label');
+    const scanBox = document.getElementById('ai-scan-box');
+    const scanSpinner = document.getElementById('scan-spinner');
+    const scanText = document.getElementById('scan-text');
+    const submitBtn = document.getElementById('submit-btn');
+
+    let scanPassed = false;
+
+    // keyboard accessibility for upload area
+    uploadLabel.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') photoInput.click(); });
+
+    photoInput.addEventListener('change', async () => {
+      const file = photoInput.files[0];
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      preview.src = url;
+      previewWrap.style.display = 'block';
+      uploadLabel.style.display = 'none';
+
+      scanPassed = false;
+      submitBtn.disabled = true;
+      scanBox.className = 'ai-scan-box scanning';
+      scanSpinner.style.display = 'block';
+      scanText.textContent = 'Scanning label…';
+
+      const result = await simulateAIScan(file.name);
+
+      scanSpinner.style.display = 'none';
+      if (result.status === 'safe') {
+        scanBox.className = 'ai-scan-box safe';
+        scanText.innerHTML = `✓ ${result.message}`;
+        scanPassed = true;
+        submitBtn.disabled = false;
+      } else {
+        scanBox.className = 'ai-scan-box warn';
+        scanText.innerHTML = `⚠ ${result.message} <br><small style="opacity:0.8">Click "Change Photo" to retry.</small>`;
+        scanPassed = false;
+      }
+    });
+
+    function retryUpload() {
+      previewWrap.style.display = 'none';
+      uploadLabel.style.display = 'block';
+      scanBox.className = 'ai-scan-box';
+      scanPassed = false;
+      submitBtn.disabled = true;
+      photoInput.value = '';
+    }
+
+    function submitListing() {
+      if (!scanPassed) { showToast('Please upload a photo first.'); return; }
+      const name = document.getElementById('item-name').value.trim();
+      if (!name) { showToast('Please enter an item name.'); return; }
+      const cat = document.getElementById('item-cat').value;
+      if (!cat) { showToast('Please select a category.'); return; }
+
+      incrementStat('shared');
+      // Show whichever badge was just unlocked (or default to Eco Hero)
+      const badges = getUnlockedBadges();
+      const justUnlocked = badges.filter(b => b.unlocked);
+      const badge = justUnlocked[justUnlocked.length - 1] || badges[0];
+      document.querySelector('.badge-anim').textContent = badge.icon;
+      document.querySelector('#success-screen h2').textContent = badge.name + ' Badge Unlocked!';
+      document.getElementById('share-form-wrap').classList.add('hidden');
+      document.getElementById('success-screen').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      scanPassed = false;
+      previewWrap.style.display = 'none';
+      uploadLabel.style.display = 'block';
+      scanBox.className = 'ai-scan-box';
+      submitBtn.disabled = true;
+      photoInput.value = '';
+      ['item-name','item-qty','item-cat','item-pickup','item-location'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      document.getElementById('share-form-wrap').classList.remove('hidden');
+      document.getElementById('success-screen').classList.remove('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

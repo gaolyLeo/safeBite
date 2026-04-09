@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeBite — Food Sharing Community</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Nav (desktop) -->
+  <nav class="top-nav">
+    <div class="logo"><span class="logo-dot"></span>Safe<em>Bite</em></div>
+    <div class="top-nav-links">
+      <a href="index.html" data-page="index.html" class="active">Home</a>
+      <a href="browse.html" data-page="browse.html">Browse</a>
+      <a href="share.html" data-page="share.html">Share Food</a>
+      <a href="profile.html" data-page="profile.html">Profile</a>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+        Community Food Sharing
+      </div>
+      <h1>Good Food Finds<br>a Second Home</h1>
+      <p>Share surplus groceries with neighbors. Reduce waste, build community, earn your Eco Hero badge.</p>
+      <div class="hero-btns">
+        <a href="browse.html" class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          Browse Food
+        </a>
+        <a href="share.html" class="btn btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          Share Food
+        </a>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num" id="stat-shared">247</div>
+        <div class="stat-label">Items Shared</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-co2">68 kg</div>
+        <div class="stat-label">CO₂ Saved</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="stat-meals">194</div>
+        <div class="stat-label">Meals Rescued</div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <h2 class="section-heading"><span class="tag">How It Works</span></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Post Your Food</h3>
+          <p>Snap a photo of packaged items — our AI scans the label and confirms it's safe to share.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Get Matched</h3>
+          <p>Commute Relay alerts you when you're already passing by a listing on your usual route.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Pick Up &amp; Go</h3>
+          <p>Confirm safety guidelines, claim the item, and arrange a convenient pickup time.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commute Relay Spotlight -->
+    <div class="commute-relay-section">
+      <h3>🚗 Commute Relay — Zero Detour Pickup</h3>
+      <p>SafeBite detects listings along your daily commute route. No extra driving — just pick up on the way.</p>
+
+      <!-- Route visualization -->
+      <div class="commute-route-vis">
+        <div class="cr-stop">
+          <div class="cr-dot home-dot">🏠</div>
+          <div class="cr-stop-label">Home</div>
+        </div>
+        <div class="cr-line"></div>
+        <div class="cr-stop">
+          <div class="cr-dot food-dot">🥖</div>
+          <div class="cr-stop-label highlight">Pickup</div>
+        </div>
+        <div class="cr-line active"></div>
+        <div class="cr-stop">
+          <div class="cr-dot food-dot">🥛</div>
+          <div class="cr-stop-label highlight">Pickup</div>
+        </div>
+        <div class="cr-line"></div>
+        <div class="cr-stop">
+          <div class="cr-dot work-dot">🏢</div>
+          <div class="cr-stop-label">Work</div>
+        </div>
+      </div>
+
+      <div class="commute-relay-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        2 items match your route today
+      </div>
+    </div>
+
+    <!-- Recent Listings Preview -->
+    <h2 class="section-heading"><span class="tag">Near You</span> Available Now</h2>
+    <div class="food-grid" id="home-listings"></div>
+
+    <div style="text-align:center; margin-top:20px; margin-bottom: 8px;">
+      <a href="browse.html" class="btn btn-surface">
+        View All Listings
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Bottom Nav (mobile) -->
+  <nav class="bottom-nav">
+    <a href="index.html" data-page="index.html" class="active">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <a href="browse.html" data-page="browse.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      Browse
+    </a>
+    <a href="share.html" data-page="share.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+      Share
+    </a>
+    <a href="profile.html" data-page="profile.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </a>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Render 4 preview cards on home page
+    const grid = document.getElementById('home-listings');
+    LISTINGS.slice(0, 4).forEach(item => {
+      const exp = expiryLabel(item.expiry);
+      grid.innerHTML += `
+        <a href="browse.html" class="food-card card">
+          <div class="food-card-img">${item.emoji}</div>
+          <div class="food-card-body">
+            <div class="food-card-title">${item.name}</div>
+            <div class="food-card-meta">
+              <div class="meta-row">
+                <span class="pill ${exp.cls}">${exp.text}</span>
+              </div>
+              <div class="meta-row">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                ~${item.distance} km · <span class="eco-tag">Eco Zone</span>
+              </div>
+            </div>
+          </div>
+        </a>`;
+    });
+
+    // Animate stats on load
+    function animateCount(el, target, suffix='') {
+      let n = 0;
+      const step = Math.ceil(target / 40);
+      const timer = setInterval(() => {
+        n = Math.min(n + step, target);
+        el.textContent = n + suffix;
+        if (n >= target) clearInterval(timer);
+      }, 30);
+    }
+    animateCount(document.getElementById('stat-shared'), 247);
+    animateCount(document.getElementById('stat-co2'), 68, ' kg');
+    animateCount(document.getElementById('stat-meals'), 194);
+  </script>
+</body>
+</html>
